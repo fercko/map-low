@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/stilos.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+        }
+        </style>
+        <title>Mapa low</title>
+    </head>
+    <body>
+        <div class="titulo">
+                <h3>Parcelario Posadas</h3>
+        </div>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/MUNICIPIOS_2020_1.js"></script>
+        <script src="data/PC_POSADAS_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-34.25910565490131,-64.69372034697258],[-23.22843648625793,-41.83283743459165]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_marandu_0');
+        map.getPane('pane_marandu_0').style.zIndex = 400;
+        var layer_marandu_0 = L.tileLayer('https://streetmap.misiones.gob.ar/hot/{z}/{x}/{y}.png', {
+            pane: 'pane_marandu_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_marandu_0;
+        map.addLayer(layer_marandu_0);
+        function pop_MUNICIPIOS_2020_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DPTO'] !== null ? autolinker.link(feature.properties['DPTO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MUN'] !== null ? autolinker.link(feature.properties['MUN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PERIMETRO_'] !== null ? autolinker.link(feature.properties['PERIMETRO_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UNIONES'] !== null ? autolinker.link(feature.properties['UNIONES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COD_MUNI'] !== null ? autolinker.link(feature.properties['COD_MUNI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MUNICIPIOS_2020_1_0() {
+            return {
+                pane: 'pane_MUNICIPIOS_2020_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_MUNICIPIOS_2020_1');
+        map.getPane('pane_MUNICIPIOS_2020_1').style.zIndex = 401;
+        map.getPane('pane_MUNICIPIOS_2020_1').style['mix-blend-mode'] = 'normal';
+        var layer_MUNICIPIOS_2020_1 = new L.geoJson(json_MUNICIPIOS_2020_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MUNICIPIOS_2020_1',
+            layerName: 'layer_MUNICIPIOS_2020_1',
+            pane: 'pane_MUNICIPIOS_2020_1',
+            onEachFeature: pop_MUNICIPIOS_2020_1,
+            style: style_MUNICIPIOS_2020_1_0,
+        });
+        bounds_group.addLayer(layer_MUNICIPIOS_2020_1);
+        map.addLayer(layer_MUNICIPIOS_2020_1);
+        function pop_PC_POSADAS_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['key'] !== null ? autolinker.link(feature.properties['key'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['url'] !== null ? autolinker.link(feature.properties['url'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['st_area_sh'] !== null ? autolinker.link(feature.properties['st_area_sh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">st_length_</th>\
+                        <td>' + (feature.properties['st_length_'] !== null ? autolinker.link(feature.properties['st_length_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PC_POSADAS_2_0() {
+            return {
+                pane: 'pane_PC_POSADAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PC_POSADAS_2');
+        map.getPane('pane_PC_POSADAS_2').style.zIndex = 402;
+        map.getPane('pane_PC_POSADAS_2').style['mix-blend-mode'] = 'normal';
+        var layer_PC_POSADAS_2 = new L.geoJson(json_PC_POSADAS_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PC_POSADAS_2',
+            layerName: 'layer_PC_POSADAS_2',
+            pane: 'pane_PC_POSADAS_2',
+            onEachFeature: pop_PC_POSADAS_2,
+            style: style_PC_POSADAS_2_0,
+        });
+        bounds_group.addLayer(layer_PC_POSADAS_2);
+        map.addLayer(layer_PC_POSADAS_2);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/PC_POSADAS_2.png" /> PC_POSADAS': layer_PC_POSADAS_2,'<img src="legend/MUNICIPIOS_2020_1.png" /> MUNICIPIOS_2020': layer_MUNICIPIOS_2020_1,"marandu": layer_marandu_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
